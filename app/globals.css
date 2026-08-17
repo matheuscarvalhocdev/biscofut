@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   NOKA — ATIVAR AQUI
+
+   Noka (Latinotype) é a tipografia oficial da campanha, definida no board:
+   Medium para texto e Black para ênfase. Por ser licenciada, os arquivos não
+   ficam no repositório.
+
+   Quando a licença web chegar, coloque os .woff2 em public/fonts/ e
+   descomente o bloco abaixo. O fallback (Poppins) sai de cena sozinho —
+   nenhuma outra linha do projeto precisa mudar.
+
+@font-face {
+  font-family: "Noka";
+  src: url("/fonts/noka-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Noka";
+  src: url("/fonts/noka-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Noka";
+  src: url("/fonts/noka-black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+--------------------------------------------------------------------------- */
+
+:root {
+  /* "Noka" primeiro: assim que os arquivos existirem, ela assume.
+     Poppins é o substituto livre mais próximo (geométrica, Black real).
+     Montserrat fecha a lista porque é a fonte de UI do site da Biscoitê. */
+  --font-noka: "Noka", "Poppins", "Montserrat", ui-sans-serif, system-ui,
+    -apple-system, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Compensa o header fixo quando a navegação usa âncoras. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-paper font-noka font-medium text-ink antialiased;
+  }
+
+  /* O board hierarquiza por peso, não por cor: títulos são Black. */
+  h1,
+  h2,
+  h3 {
+    @apply font-black text-navy;
+  }
+
+  ::selection {
+    @apply bg-navy text-white;
+  }
+
+  :focus-visible {
+    outline: 3px solid #5881a5;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  /* Rótulo de seção — caixa-alta, tracking aberto, como no board. */
+  .eyebrow {
+    @apply text-xs font-black uppercase tracking-label text-steel;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-navy px-7 py-3.5
+      text-sm font-black uppercase tracking-label text-white
+      transition-colors hover:bg-navy-deep
+      disabled:cursor-not-allowed disabled:bg-line disabled:text-ink/40;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-navy/25
+      px-7 py-3.5 text-sm font-black uppercase tracking-label text-navy
+      transition-colors hover:border-navy hover:bg-white;
+  }
+
+  .card {
+    @apply rounded-2xl border border-line bg-white;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

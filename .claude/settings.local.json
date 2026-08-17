@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /tmp)",
+      "Bash(grep -oiE '\\(--[a-z0-9-]*colou?r[a-z0-9-]*:[^;}]{0,40}\\)|\\(background\\(-color\\)?:#[0-9a-f]{3,8}\\)' bisc.html)",
+      "Bash(sed -i 's/\\\\bStepper2\\\\b/QuantityStepper/g' components/Participation.tsx)",
+      "Bash(sed -i '/^  formatNumeroDaSorte,$/d' components/Participation.tsx)",
+      "Bash(sed -i '/^\\\\/\\\\/ Reexportado para o painel lateral saber formatar sem duplicar regra\\\\.$/,+1d' components/Participation.tsx)",
+      "Bash(ls \"/c/Program Files/Google/Chrome/Application/chrome.exe\" \"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" 2>&1 | head)",
+      "Read(//c/Program Files/Google/Chrome/Application/**)",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless --disable-gpu --screenshot=/tmp/wm/wm.png --window-size=530,290 \"file:///C:/Users/MATHEU~1/AppData/Local/Temp/wm/wm.html\")",
+      "Read(//tmp/**)",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless --disable-gpu --hide-scrollbars --screenshot=/tmp/wm/home.png --window-size=1440,3000 --virtual-time-budget=6000 \"http://localhost:3000/\")",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless --disable-gpu --hide-scrollbars --screenshot=/tmp/wm/home2.png --window-size=1440,7600 --virtual-time-budget=6000 \"http://localhost:3000/\")",
+      "Bash(python -c ' *)",
+      "Bash(node -e ' *)",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless --disable-gpu --hide-scrollbars --screenshot=/tmp/wm/form.png --window-size=1440,1700 --virtual-time-budget=6000 \"http://localhost:3000/preview-dev\")",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless --disable-gpu --hide-scrollbars --screenshot=/tmp/wm/step2.png --window-size=1440,1400 --virtual-time-budget=7000 \"http://localhost:3000/preview-dev\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(mv futi-landing/futi-landing/app .)",
+      "Bash(mv futi-landing/futi-landing/components .)",
+      "Bash(mv futi-landing/futi-landing/public .)",
+      "Bash(cp -r futi-landing/futi-landing/app ./app)",
+      "Bash(cp -r futi-landing/futi-landing/components ./components)",
+      "Bash(cp -r futi-landing/futi-landing/public ./public)"
+    ]
+  }
+}
