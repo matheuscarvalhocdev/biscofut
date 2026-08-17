@@ -15,13 +15,16 @@ export default function EligibleProducts() {
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2">
           {produtosElegiveis.map((produto) => (
-            <article key={produto.sku} className="card flex items-center gap-7 p-7 sm:p-8">
+            <article
+              key={produto.sku}
+              className="card flex flex-col items-start gap-5 p-6 sm:flex-row sm:items-center sm:gap-7 sm:p-8"
+            >
               <Image
                 src={produto.imagem}
                 alt={`Embalagem do produto ${produto.nome}`}
                 width={produto.imagemLargura}
                 height={produto.imagemAltura}
-                className="h-28 w-auto shrink-0"
+                className="h-24 w-auto shrink-0 sm:h-28"
               />
               <div>
                 <h3 className="text-lg font-black uppercase tracking-headline">

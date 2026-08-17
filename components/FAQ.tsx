@@ -76,7 +76,7 @@ export default function FAQ() {
                   </svg>
                 </span>
               </summary>
-              <p className="mt-3 max-w-prose pr-10 text-sm leading-relaxed text-ink/70">
+              <p className="mt-3 max-w-prose pr-4 text-sm leading-relaxed text-ink/70 sm:pr-10">
                 {item.a}
               </p>
             </details>

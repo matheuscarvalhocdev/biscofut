@@ -40,7 +40,7 @@ export default function Hero() {
             </a>
           </div>
 
-          <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-line pt-7">
+          <dl className="mt-12 grid max-w-lg grid-cols-3 gap-3 border-t border-line pt-7 sm:gap-6">
             <Stat term="Itens autografados" value={String(quantidade)} />
             <Stat term="Início" value={formatDate(campaign.vigencia.inicio)} />
             <Stat term="Apuração" value={formatDate(campaign.apuracao.data)} />
@@ -70,11 +70,13 @@ export default function Hero() {
 
 function Stat({ term, value }: { term: string; value: string }) {
   return (
-    <div>
-      <dt className="text-[11px] font-black uppercase tracking-label text-steel">
+    <div className="min-w-0">
+      <dt className="text-[10px] font-black uppercase leading-snug tracking-label text-steel sm:text-[11px]">
         {term}
       </dt>
-      <dd className="mt-1.5 text-xl font-black text-navy">{value}</dd>
+      <dd className="mt-1.5 break-words text-lg font-black leading-tight text-navy sm:text-xl">
+        {value}
+      </dd>
     </div>
   );
 }

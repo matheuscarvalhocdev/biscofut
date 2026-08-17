@@ -33,7 +33,7 @@ export default function Header() {
           : "border-b border-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center gap-6 px-6 py-4 md:px-10">
+      <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-4 sm:gap-6 sm:px-6 md:px-10">
         <a href="#conteudo" className="flex items-center gap-3" aria-label="Promoção Futi — início">
           <FutiWordmark className="h-7 w-auto text-navy" />
           <span className="hidden h-8 w-px bg-navy/20 sm:block" aria-hidden="true" />
@@ -54,7 +54,7 @@ export default function Header() {
 
         <a
           href="#participar"
-          className="ml-auto rounded-full bg-navy px-5 py-2.5 text-[11px] font-black uppercase tracking-label text-white transition-colors hover:bg-navy-deep lg:ml-0"
+          className="ml-auto whitespace-nowrap rounded-full bg-navy px-3.5 py-2.5 text-[11px] font-black uppercase tracking-label text-white transition-colors hover:bg-navy-deep sm:px-5 lg:ml-0"
         >
           {aberto ? "Participar" : "Saiba mais"}
         </a>
@@ -76,7 +76,7 @@ export default function Header() {
       {open && (
         <nav
           id="menu-mobile"
-          className="border-t border-line bg-paper px-6 pb-5 pt-2 lg:hidden"
+          className="border-t border-line bg-paper px-4 pb-5 pt-2 sm:px-6 lg:hidden"
           aria-label="Seções da página"
         >
           {nav.map((item) => (
