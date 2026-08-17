@@ -32,10 +32,6 @@ const faq = [
     q: "Preciso guardar a nota fiscal original?",
     a: "Sim, até o fim da promoção. Se você for contemplado, a nota original pode ser exigida como comprovação antes da entrega do prêmio.",
   },
-  {
-    q: "E o encontro com o Neymar Jr.?",
-    a: "Está em avaliação e não integra os prêmios desta promoção. Só passará a valer se constar do Certificado de Autorização emitido pela SPA/MF.",
-  },
 ];
 
 export default function FAQ() {
