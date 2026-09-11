@@ -15,10 +15,25 @@
 export const PENDENTE = "[A CONFIRMAR]" as const;
 
 export const campaign = {
-  nome: "Promoção Futi",
+  nome: "Missão Neymar Jr.",
   marcas: {
     promotora: "Biscoitê",
     embaixador: "Neymar Jr.",
+  },
+
+  /** Identificação legal da promotora, conforme consta no regulamento protocolado. */
+  promotora: {
+    razaoSocial: "Biscoite Ltda.",
+    cnpj: "35.689.008/0001-91",
+    endereco:
+      "Rua São Sebastião, nº 823, Santo Amaro, São Paulo/SP – CEP 04708-001",
+    representante: {
+      nome: "Raul Alves de Matos",
+      nacionalidade: "brasileiro",
+      estadoCivil: "casado",
+      rg: "33.806.841-7",
+      cpf: "284.927.398",
+    },
   },
 
   /** Certificado de Autorização emitido pela SPA/MF. */
@@ -32,23 +47,47 @@ export const campaign = {
   /** Vigência da participação. Formato ISO (AAAA-MM-DD) ou null. */
   vigencia: {
     inicio: "2026-11-01" as string | null,
-    fim: null as string | null,
+    fim: "2027-10-26" as string | null,
   },
 
-  /** Data da apuração, com base na extração da Loteria Federal. */
+  /** Período de divulgação da campanha (mídia), mais amplo que o de participação. */
+  divulgacao: {
+    inicio: "2026-10-01" as string | null,
+    fim: "2027-10-26" as string | null,
+  },
+
+  /**
+   * Apuração mensal, na última quarta-feira de cada mês — exceto dezembro,
+   * antecipada para 23/12. Uma data por sorteio, 12 sorteios ao todo.
+   */
   apuracao: {
-    data: null as string | null,
+    datas: [
+      "2026-11-25",
+      "2026-12-23",
+      "2027-01-27",
+      "2027-02-24",
+      "2027-03-31",
+      "2027-04-28",
+      "2027-05-26",
+      "2027-06-30",
+      "2027-07-28",
+      "2027-08-25",
+      "2027-09-29",
+      "2027-10-27",
+    ] as string[],
     /** Extração da Loteria Federal usada como base do sorteio. */
     baseLoteriaFederal: true,
+    /** Ganhadores contemplados a cada sorteio mensal. */
+    ganhadoresPorSorteio: 2,
   },
 
   premios: {
     /** Prêmio principal, já definido no briefing. */
     itensAutografados: {
       quantidade: 24,
-      descricao: "camiseta oficial autografada pelo Neymar Jr.",
+      descricao: "camiseta do Brasil oficial autografada pelo Neymar Jr.",
       /** Valor unitário declarado no protocolo. */
-      valorUnitario: null as number | null,
+      valorUnitario: 400 as number | null,
     },
     /**
      * O briefing trata o encontro como "possível". Enquanto não estiver no

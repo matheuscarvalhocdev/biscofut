@@ -95,27 +95,31 @@ export function aplicarTeto(
   };
 }
 
-/** Formato de exibição do número da sorte: 6 dígitos, com zeros à esquerda. */
+/** Formato de exibição do número da sorte: 5 dígitos, com zeros à esquerda. */
 export function formatNumeroDaSorte(sequencial: number): string {
-  return String(sequencial).padStart(6, "0");
+  return String(sequencial).padStart(5, "0");
 }
 
 /**
  * Apuração — documentado aqui porque o fluxo precisa constar no protocolo.
  *
- * O número contemplado NÃO é aleatório: ele é derivado dos prêmios da
- * extração da Loteria Federal da data de apuração, pela regra clássica de
- * composição (unidade→dezena de milhar de cada um dos 5 prêmios). Se o
- * número resultante não tiver sido distribuído, aplica-se a regra de
- * aproximação declarada no regulamento (número imediatamente superior e,
- * na falta, imediatamente inferior).
+ * A cada sorteio mensal, a Loteria Federal sorteia 5 números de concurso —
+ * cada um já no formato de 5 dígitos de um número da sorte, sem composição
+ * ou derivação. Os 2 ganhadores do mês são os participantes cujo número da
+ * sorte corresponde, nesta ordem, ao 1º e ao 2º número sorteado; se ninguém
+ * possuir o número correspondente, o critério se estende ao 3º, 4º e 5º
+ * números. Persistindo a ausência de contemplado para uma posição, aplica-se
+ * a aproximação numérica imediatamente superior ao número de referência (ou
+ * imediatamente inferior, quando o de referência for 99999) e, por fim, o
+ * resultado da Loteria Federal do sábado imediatamente seguinte.
  *
- * Implementação real fica no backend, com os resultados oficiais como
- * entrada auditável. A assinatura abaixo existe para fixar o contrato.
+ * Encontrar "quem possui este número" e aplicar a aproximação depende da
+ * base de participantes — fica no backend, com os resultados oficiais como
+ * entrada auditável. Esta função só extrai os números de referência do
+ * resultado da loteria, na ordem em que devem ser usados na apuração.
  */
-export function numeroContempladoPorLoteriaFederal(
+export function numerosDeReferenciaPorLoteriaFederal(
   premios: [string, string, string, string, string]
-): string {
-  // Um dígito de cada prêmio, do 1º ao 5º, lendo a unidade de cada um.
-  return premios.map((premio) => premio.replace(/\D/g, "").slice(-1)).join("");
+): string[] {
+  return premios.map((premio) => premio.replace(/\D/g, "").slice(-5).padStart(5, "0"));
 }

@@ -166,17 +166,13 @@ protocolado é problema de conformidade, não de layout.
 | Teto por CPF | 200 números | `campaign.regras.maxNumerosPorCpf` |
 | Nota única na campanha | sim | `campaign.regras.notaFiscalUnica` |
 | Prazo p/ cadastrar após a compra | 30 dias | `campaign.regras.prazoCadastroNotaDias` |
-| Números por produto | 3 (Collection) / 5 (Arena) | `lib/numeroDaSorte.ts` |
+| Números por produto | 1 (Card) / 6 (Bonequinho) / 25 (Campo) | `lib/numeroDaSorte.ts` |
 | Prêmios | 24 camisetas autografadas | `campaign.premios` |
 
 **Campos que o jurídico precisa preencher antes do protocolo** — hoje `null`,
 e a página mostra `[A CONFIRMAR]` de propósito, para gritar o que falta:
 
 - `certificado.numero` e `certificado.pdf`
-- `vigencia.inicio` e `vigencia.fim`
-- `apuracao.data`
-- `premios.itensAutografados.valorUnitario`
-- CNPJ da promotora (nas páginas legais)
 - `contato.sacTelefone`
 
 ---

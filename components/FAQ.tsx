@@ -1,5 +1,5 @@
 import Headline from "./Headline";
-import { campaign, formatDate } from "@/lib/campaign";
+import { campaign } from "@/lib/campaign";
 
 const faq = [
   {
@@ -24,9 +24,7 @@ const faq = [
   },
   {
     q: "Como é feito o sorteio?",
-    a: `Pela extração da Loteria Federal da data de apuração (${formatDate(
-      campaign.apuracao.data
-    )}), com a regra de composição dos números descrita no regulamento. Não há sorteio interno nem escolha manual de ganhadores.`,
+    a: `Mensalmente, com base nos números sorteados na extração da Loteria Federal do dia, conforme os critérios descritos no regulamento. Não há sorteio interno nem escolha manual de ganhadores.`,
   },
   {
     q: "Preciso guardar a nota fiscal original?",
