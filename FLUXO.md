@@ -167,7 +167,7 @@ protocolado é problema de conformidade, não de layout.
 | Nota única na campanha | sim | `campaign.regras.notaFiscalUnica` |
 | Prazo p/ cadastrar após a compra | 30 dias | `campaign.regras.prazoCadastroNotaDias` |
 | Números por produto | 3 (Collection) / 5 (Arena) | `lib/numeroDaSorte.ts` |
-| Prêmios | 50 camisetas autografadas | `campaign.premios` |
+| Prêmios | 24 camisetas autografadas | `campaign.premios` |
 
 **Campos que o jurídico precisa preencher antes do protocolo** — hoje `null`,
 e a página mostra `[A CONFIRMAR]` de propósito, para gritar o que falta:

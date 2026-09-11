@@ -68,8 +68,8 @@ export default function Participation() {
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <p className="eyebrow">Participar</p>
         <Headline
-          lead="Cadastre sua nota e"
-          emphasis="receba seus números."
+          lead="Cadastre a nota fiscal e"
+          emphasis="participe."
           className="mt-4 max-w-2xl text-3xl sm:text-4xl"
         />
 

@@ -8,12 +8,12 @@ export default function EligibleProducts() {
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <p className="eyebrow">Produtos participantes</p>
         <Headline
-          lead="Cada produto vale"
-          emphasis="uma quantidade de números."
+          lead="Quanto maior o produto,"
+          emphasis="mais números da sorte você recebe."
           className="mt-4 max-w-2xl text-3xl sm:text-4xl"
         />
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2">
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {produtosElegiveis.map((produto) => (
             <article
               key={produto.sku}

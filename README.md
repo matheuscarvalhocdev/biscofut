@@ -2,7 +2,7 @@
 
 Landing page da promoção comercial **Futi** (Biscoitê × Neymar Jr.), na
 mecânica **"Compre e Concorra"**: o consumidor compra um produto participante,
-cadastra a nota fiscal e recebe números da sorte para concorrer a **50
+cadastra a nota fiscal e recebe números da sorte para concorrer a **24
 camisetas autografadas pelo Neymar Jr.**
 
 Três documentos, três assuntos:

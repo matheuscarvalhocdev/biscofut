@@ -6,7 +6,7 @@ import { transactionsAllowed } from "@/lib/promoStatus";
 
 export default function Hero() {
   const aberto = transactionsAllowed();
-  const { quantidade, descricao } = campaign.premios.itensAutografados;
+  const { quantidade } = campaign.premios.itensAutografados;
 
   return (
     <section id="conteudo" className="bg-paper pt-32 pb-20 md:pt-40 md:pb-28">
@@ -40,10 +40,9 @@ export default function Hero() {
             </a>
           </div>
 
-          <dl className="mt-12 grid max-w-lg grid-cols-3 gap-3 border-t border-line pt-7 sm:gap-6">
+          <dl className="mt-12 grid max-w-lg grid-cols-2 gap-3 border-t border-line pt-7 sm:gap-6">
             <Stat term="Itens autografados" value={String(quantidade)} />
             <Stat term="Início" value={formatDate(campaign.vigencia.inicio)} />
-            <Stat term="Apuração" value={formatDate(campaign.apuracao.data)} />
           </dl>
         </div>
 
@@ -59,8 +58,7 @@ export default function Hero() {
             />
           </div>
           <figcaption className="mt-3 text-xs leading-relaxed text-ink/50">
-            Imagem meramente ilustrativa. O prêmio é {descricao}, conforme
-            descrito no regulamento.
+            Imagem meramente ilustrativa.
           </figcaption>
         </figure>
       </div>

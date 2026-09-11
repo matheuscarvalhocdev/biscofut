@@ -36,8 +36,6 @@ const docs = [
 ];
 
 export default function LegalDocs() {
-  const { numero, pdf } = campaign.certificado;
-
   return (
     <section id="legal" className="border-t border-line bg-paper py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
@@ -72,36 +70,14 @@ export default function LegalDocs() {
         </div>
 
         {/* Certificado de Autorização — exibição obrigatória após a emissão. */}
-        <div
-          className={`mt-6 rounded-2xl border p-7 sm:p-9 ${
-            numero ? "border-line bg-white" : "border-dashed border-steel/45 bg-white"
-          }`}
-        >
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-[11px] font-black uppercase tracking-label text-steel">
-                Certificado de Autorização · {campaign.legal.orgao}
-              </p>
-              <p className="mt-2.5 text-2xl font-black text-navy">
-                {numero ? `CA nº ${numero}` : "Aguardando emissão"}
-              </p>
-              <p className="mt-2 max-w-prose text-sm leading-relaxed text-ink/65">
-                {numero
-                  ? "Promoção autorizada. O certificado abaixo é o documento oficial emitido pelo Ministério da Fazenda."
-                  : "A campanha só pode começar após a autorização prévia da SPA/MF. Até a emissão do certificado, o cadastro permanece desativado."}
-              </p>
-            </div>
-
-            {numero && pdf ? (
-              <a href={pdf} target="_blank" rel="noreferrer" className="btn-primary shrink-0">
-                Ver certificado
-              </a>
-            ) : (
-              <span className="shrink-0 rounded-full bg-paper px-6 py-3.5 text-xs font-black uppercase tracking-label text-ink/40 ring-1 ring-line">
-                Em análise
-              </span>
-            )}
-          </div>
+        <div className="mt-6 rounded-2xl border border-line bg-white p-7 sm:p-9">
+          <p className="text-[11px] font-black uppercase tracking-label text-steel">
+            Certificado de Autorização · {campaign.legal.orgao}
+          </p>
+          <p className="mt-2.5 max-w-prose text-sm leading-relaxed text-ink/70">
+            Acesse o documento anexo para consultar os detalhes da
+            certificação da promoção.
+          </p>
 
           <dl className="mt-8 grid gap-6 border-t border-line pt-7 sm:grid-cols-4">
             <Item term="Período de participação" value={periodo()} />

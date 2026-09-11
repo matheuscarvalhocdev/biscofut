@@ -134,7 +134,7 @@ export default function Regulamento() {
           items={[
             <>
               <strong>
-                {itensAutografados.quantidade} (cinquenta){" "}
+                {itensAutografados.quantidade} (vinte e quatro){" "}
                 {itensAutografados.descricao}
               </strong>
               , sendo um prêmio por contemplado. Valor unitário declarado:{" "}

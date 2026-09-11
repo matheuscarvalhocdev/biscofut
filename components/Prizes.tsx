@@ -1,5 +1,5 @@
 import Headline from "./Headline";
-import { campaign, PENDENTE } from "@/lib/campaign";
+import { campaign } from "@/lib/campaign";
 
 export default function Prizes() {
   const { itensAutografados } = campaign.premios;
@@ -9,7 +9,7 @@ export default function Prizes() {
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <p className="eyebrow">Prêmios</p>
         <Headline
-          lead="São 50 chances de levar algo"
+          lead={`São ${itensAutografados.quantidade} chances de levar algo`}
           emphasis="assinado pela mão dele."
           className="mt-4 max-w-2xl text-3xl sm:text-4xl"
         />
@@ -26,28 +26,16 @@ export default function Prizes() {
             </div>
 
             <h3 className="mt-7 text-2xl font-black uppercase leading-tight tracking-headline">
-              Camiseta oficial autografada pelo Neymar Jr.
+              Camiseta do Brasil Oficial Autografada pelo Neymar Jr.
             </h3>
             <p className="mt-4 max-w-prose leading-relaxed text-ink/70">
-              Cinquenta unidades, cada uma assinada individualmente e entregue
-              com certificado de autenticidade. Um item por contemplado.
+              Vinte e quatro unidades, cada uma assinada individualmente. Um
+              item por contemplado.
             </p>
 
             <dl className="mt-8 grid gap-x-8 gap-y-5 border-t border-line pt-7 sm:grid-cols-2">
               <Spec term="Quantidade" value={`${itensAutografados.quantidade} unidades`} />
-              <Spec
-                term="Valor unitário declarado"
-                value={
-                  itensAutografados.valorUnitario
-                    ? itensAutografados.valorUnitario.toLocaleString("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      })
-                    : PENDENTE
-                }
-              />
               <Spec term="Forma de apuração" value="Extração da Loteria Federal" />
-              <Spec term="Entrega" value="Frete por conta da promotora, em todo o Brasil" />
             </dl>
           </article>
         </div>

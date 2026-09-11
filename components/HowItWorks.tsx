@@ -13,22 +13,22 @@ const steps = [
   {
     n: "01",
     title: "Compre um produto participante",
-    body: "Qualquer produto da linha Futi, em loja física ou no e-commerce. Guarde a nota fiscal ou o cupom — é ela que vale a participação.",
+    body: "Adquira um produto participante da promoção em uma loja física ou no e-commerce. A nota fiscal ou o cupom fiscal da compra é indispensável para realizar o cadastro e participar do sorteio.",
   },
   {
     n: "02",
     title: "Cadastre-se com seus dados",
-    body: "Nome completo, CPF, e-mail e telefone. Uma vez só: nas próximas notas você entra com CPF e e-mail.",
+    body: "Faça seu cadastro informando nome completo, CPF, e-mail e telefone. Após o primeiro acesso, seus dados ficarão registrados e, nos próximos cadastros de notas, você poderá acessar utilizando seu CPF e e-mail.",
   },
   {
     n: "03",
-    title: "Informe a nota fiscal",
-    body: "Digite a chave de acesso de 44 dígitos (está no rodapé do cupom, junto ao QR Code) e anexe a foto. A validação confirma emissor, data e produto.",
+    title: "Cadastre sua nota fiscal",
+    body: "Informe a chave de acesso de 44 dígitos da nota fiscal ou do cupom, faça a leitura do QR Code e anexe uma foto do comprovante, quando solicitado. Após o envio, as informações serão validadas para confirmar a compra e os produtos participantes.",
   },
   {
     n: "04",
     title: "Receba seus números da sorte",
-    body: "Nota validada, os números aparecem na hora na sua área e chegam por e-mail. Produtos maiores valem mais números.",
+    body: "Após a validação da nota, seus números da sorte serão disponibilizados na área do participante e enviados para o e-mail cadastrado. A quantidade de números recebidos varia de acordo com os produtos participantes adquiridos.",
   },
 ];
 
@@ -63,10 +63,18 @@ export default function HowItWorks() {
         </ol>
 
         <p className="mt-7 max-w-prose text-sm leading-relaxed text-ink/60">
-          A nota precisa ser cadastrada em até{" "}
-          {campaign.regras.prazoCadastroNotaDias} dias da compra, e cada nota
-          vale uma única vez. Cada CPF acumula no máximo{" "}
-          {campaign.regras.maxNumerosPorCpf} números durante toda a promoção.
+          A nota fiscal deverá ser cadastrada em até{" "}
+          {campaign.regras.prazoCadastroNotaDias} dias após a data da compra e
+          poderá ser utilizada uma única vez. Cada CPF poderá acumular, no
+          máximo, {campaign.regras.maxNumerosPorCpf} números da sorte durante
+          todo o período da promoção. Consulte o{" "}
+          <a
+            href={campaign.documentos.regulamento}
+            className="font-black text-navy underline underline-offset-2"
+          >
+            regulamento completo
+          </a>{" "}
+          para conhecer todas as condições de participação.
         </p>
       </div>
     </section>

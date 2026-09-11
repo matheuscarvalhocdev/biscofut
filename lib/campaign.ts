@@ -31,7 +31,7 @@ export const campaign = {
 
   /** Vigência da participação. Formato ISO (AAAA-MM-DD) ou null. */
   vigencia: {
-    inicio: null as string | null,
+    inicio: "2026-11-01" as string | null,
     fim: null as string | null,
   },
 
@@ -45,7 +45,7 @@ export const campaign = {
   premios: {
     /** Prêmio principal, já definido no briefing. */
     itensAutografados: {
-      quantidade: 50,
+      quantidade: 24,
       descricao: "camiseta oficial autografada pelo Neymar Jr.",
       /** Valor unitário declarado no protocolo. */
       valorUnitario: null as number | null,
