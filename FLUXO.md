@@ -19,28 +19,36 @@ documentação: o que está aqui descreve exatamente o que o código faz.
 │  /regulamento         documento legal (rota própria)                │
 │  /politica-privacidade                                              │
 │  /termos-de-uso                                                     │
+│  /meus-numeros        consulta por CPF + e-mail (canais 1 e 2)      │
 │                                                                     │
 │  Interruptor mestre: lib/promoStatus.ts                             │
 │    PRE_LAUNCH ──> página institucional, ZERO transação              │
 │    ACTIVE     ──> fluxo completo (só com nº de CA registrado)        │
-└────────────────────────────┬────────────────────────────────────────┘
-                             │  POST /api/participacao
-                             ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│  VALIDAÇÃO NO SERVIDOR (app/api/participacao/route.ts)              │
-│                                                                     │
-│  0. autorização  ── sem CA registrado -> 503, nada é gravado        │
-│  1. participante ── nome, CPF (dígito verificador), idade ≥ 18,      │
-│                     e-mail, telefone com DDD                        │
-│  2. consentimentos ── regulamento + privacidade obrigatórios;        │
-│                       marketing separado e opcional (LGPD)           │
-│  3. nota fiscal  ── chave de 44 dígitos + DV módulo 11,              │
-│                     emissão dentro da vigência,                      │
-│                     produto participante, imagem anexada             │
-│  4. unicidade    ── chave já usada? -> 409                           │
-│  5. teto por CPF ── aplica limite, informa excedente                 │
-│  6. emissão      ── série sequencial única (EM TRANSAÇÃO)            │
-└─────────────────────────────────────────────────────────────────────┘
+└──────────────┬──────────────────────────────────┬────────────────────┘
+              │  POST /api/participacao          │  POST (webhook) da Nexaas
+              │  (canal 1: nota fiscal manual)   │  /api/webhooks/nexaas
+              ▼                                  │  (canal 2: compra na loja)
+┌─────────────────────────────────────────────┐  ▼
+│  VALIDAÇÃO NO SERVIDOR                       │  ┌───────────────────────────┐
+│  (app/api/participacao/route.ts)             │  │ app/api/webhooks/nexaas   │
+│                                               │  │                           │
+│  0. autorização  ── sem CA -> 503             │  │ 0. assinatura HMAC        │
+│  1. participante ── nome, CPF, idade ≥ 18,     │  │ 1. status pago? senão 200 │
+│                     e-mail, telefone com DDD  │  │    (ignora, sem reenvio)  │
+│  2. consentimentos ── regulamento +           │  │ 2. autorização (§0 igual) │
+│                       privacidade obrigatórios │  │ 3. pedido já processado? │
+│  3. nota fiscal  ── chave de 44 dígitos + DV,  │  │ 4. CPF do comprador       │
+│                     emissão na vigência,       │  │ 5. SKU Nexaas -> produto  │
+│                     produto participante,      │  │ 6. teto por CPF           │
+│                     imagem anexada             │  │ 7. emissão                │
+│  4. unicidade    ── chave já usada? -> 409     │  └───────────────────────────┘
+│  5. teto por CPF ── aplica limite               │
+│  6. emissão      ── série sequencial única      │
+└───────────────────┬───────────────────────────┘
+                    │
+                    ▼
+         ambos gravam em lib/store.ts (participante por CPF,
+         compartilhado entre os dois canais — ver §3.5)
 ```
 
 ---
@@ -153,6 +161,57 @@ números que não vieram.
 
 ---
 
+## 3.5. Canal 2 — compra na loja, via webhook da Nexaas
+
+Além do cadastro manual de nota fiscal (canal 1, acima), a campanha também
+gera números da sorte automaticamente quando a pessoa compra os produtos
+participantes direto na loja (Nexaas). Não há formulário nesse canal: a
+Nexaas nos avisa do pedido pago, e o participante consulta o resultado
+depois em `/meus-numeros`, com CPF + e-mail.
+
+```
+Nexaas (pedido pago) ──POST──> /api/webhooks/nexaas ──> lib/store.ts
+                                                              │
+Participante ──CPF + e-mail──> /api/meus-numeros ────────────┘
+```
+
+**⚠️ Contrato do webhook ainda não confirmado com a Nexaas.** O formato do
+payload, o nome do evento de "pedido pago" e o header de assinatura em
+`lib/nexaas.ts` são uma suposição razoável (padrão de e-commerce), só para
+destravar o resto do fluxo. Antes de ligar de verdade:
+
+1. Confirmar com a Nexaas: nome do evento, formato exato do JSON, nome e
+   algoritmo do header de assinatura.
+2. Ajustar `NexaasWebhookEvent` e a leitura do payload em
+   `app/api/webhooks/nexaas/route.ts`.
+3. Preencher `NEXAAS_SKU_PARA_PRODUTO` (`lib/nexaas.ts`) com os SKUs reais
+   cadastrados na loja — hoje são placeholders iguais aos nossos próprios
+   SKUs (`FUTI-CARD`, `FUTI-COL`, `FUTI-ARE`).
+4. Configurar a variável de ambiente `NEXAAS_WEBHOOK_SECRET` (sem ela, o
+   endpoint recusa qualquer webhook em produção — de propósito, para nunca
+   aceitar um payload não verificado por engano).
+
+**Login em `/meus-numeros` é por CPF + senha** (`app/api/meus-numeros/route.ts`),
+não CPF + e-mail — CPF sozinho pode vazar ou ser adivinhado, e antes disso
+qualquer pessoa que soubesse CPF e e-mail de alguém (dado bem menos secreto
+do que se gostaria) via quantos números aquele CPF tinha. Como nenhum
+cadastro anterior (nota fiscal ou pedido Nexaas) coleta senha, o primeiro
+acesso é uma etapa própria — `app/api/meus-numeros/senha/route.ts` — que
+confirma CPF + e-mail da compra (a mesma verificação que valia antes) e só
+então define a senha, uma única vez por CPF (`definirSenha` em
+`lib/store.ts` recusa redefinir se já existe hash). Senha é hasheada com
+scrypt em `lib/senha.ts`, sem dependência nova. Não há fluxo de "esqueci
+minha senha" ainda — depende de e-mail transacional, ver §6.2. A mensagem
+de erro é sempre a mesma (CPF, senha ou combinação inexistente), para não
+vazar se um CPF já participou.
+
+**Cada compra gera números conforme o produto**, usando os mesmos pesos do
+canal manual (`lib/numeroDaSorte.ts`): Futi Card = 1, Futi Collection
+(Bonequinho) = 6, Futi Arena (Campo) = 25. Comprar Card + Arena na mesma
+compra gera 1 + 25 = 26 números, todos no mesmo CPF.
+
+---
+
 ## 4. Regras de negócio, e onde cada uma vive
 
 Todas em `lib/campaign.ts`, num objeto só. Nenhum valor de prêmio, data,
@@ -167,7 +226,7 @@ protocolado é problema de conformidade, não de layout.
 | Nota única na campanha | sim | `campaign.regras.notaFiscalUnica` |
 | Prazo p/ cadastrar após a compra | 30 dias | `campaign.regras.prazoCadastroNotaDias` |
 | Números por produto | 1 (Card) / 6 (Bonequinho) / 25 (Campo) | `lib/numeroDaSorte.ts` |
-| Prêmios | 24 camisetas autografadas | `campaign.premios` |
+| Prêmios | 22 camisetas autografadas | `campaign.premios` |
 
 **Campos que o jurídico precisa preencher antes do protocolo** — hoje `null`,
 e a página mostra `[A CONFIRMAR]` de propósito, para gritar o que falta:
@@ -205,21 +264,28 @@ API. O que falta é persistência e infraestrutura.
 
 ### 6.1 Banco (bloqueante)
 
-`app/api/participacao/route.ts` usa um `Map` em memória — ele morre a cada
-reinício e não é compartilhado entre instâncias. Substituir por:
+`lib/store.ts` usa um `Map` em memória, compartilhado pelos dois canais
+(nota fiscal e webhook Nexaas) via `globalThis` — truque que só resolve o
+compartilhamento **dentro de um único processo** (necessário até para o
+`next dev` funcionar, já que cada rota de API é compilada como um módulo
+separado). Em produção na Vercel, cada rota de API vira uma função
+serverless independente, e cold starts zeram a memória — ou seja, isto
+continua sendo só para provar o fluxo. Substituir por:
 
 ```sql
-participante(id, nome, cpf UNIQUE, nascimento, email, telefone, criado_em)
+participante(id, nome, cpf UNIQUE, nascimento, email, telefone, senha_hash, criado_em)
 consentimento(id, participante_id, tipo, aceito_em, ip, user_agent, versao_doc)
 nota_fiscal(id, participante_id, chave_acesso UNIQUE, cnpj_emitente,
             emissao, cupom_key, status, validado_em)
-numero_sorte(id, participante_id, nota_fiscal_id, numero UNIQUE, criado_em)
+pedido_nexaas(id, participante_id, pedido_id UNIQUE, status, recebido_em)
+numero_sorte(id, participante_id, origem, referencia_id, numero UNIQUE, criado_em)
 ```
 
 Três invariantes que **têm** que ser do banco, não da aplicação:
 
-- `UNIQUE (chave_acesso)` — a checagem em código tem janela de corrida; duas
-  requisições simultâneas com a mesma nota passam as duas.
+- `UNIQUE (chave_acesso)` e `UNIQUE (pedido_id)` — a checagem em código tem
+  janela de corrida; duas requisições simultâneas com a mesma nota (ou dois
+  reenvios do mesmo webhook) passam as duas.
 - `UNIQUE (numero)` + emissão **dentro de transação** — sem isso, dois
   cadastros concorrentes recebem o mesmo número da sorte, e aí a apuração
   tem dois donos para um número.
@@ -233,10 +299,11 @@ aceito**: é o que prova, meses depois, o que a pessoa aceitou.
 | Item | Observação |
 | --- | --- |
 | Upload assinado | §5 |
-| Rate limiting | por IP e por CPF, no endpoint de cadastro |
-| CAPTCHA | contra automação em massa |
-| E-mail transacional | confirmação com os números emitidos |
-| Área do participante | login para consultar números e notas |
+| Rate limiting | por IP e por CPF, no endpoint de cadastro, em `/api/meus-numeros` (login) e em `/api/meus-numeros/senha` (criação) — este último é o alvo óbvio de força bruta contra o par CPF+e-mail |
+| CAPTCHA | contra automação em massa, principalmente em `/api/meus-numeros/senha` |
+| E-mail transacional | confirmação com os números emitidos; e viabiliza um fluxo de "esqueci minha senha" em `/meus-numeros`, que hoje não existe |
+| Área do participante | esqueleto pronto em `/meus-numeros`, com login por CPF + senha (§3.5) — falta banco de verdade por trás |
+| Webhook Nexaas | contrato ainda não confirmado com a Nexaas — ver §3.5 |
 | Auditoria de notas | fila de conferência manual/OCR das imagens |
 | Apuração | entrada dos resultados oficiais da Loteria Federal |
 | `robots: index` | hoje `noindex` em `app/layout.tsx` — liberar na publicação |
@@ -268,3 +335,8 @@ aceito**: é o que prova, meses depois, o que a pessoa aceitou.
 - [ ] Verificar que o CA aparece na seção "Documentos oficiais" e no rodapé
 - [ ] `robots: index` liberado
 - [ ] Teste de ponta a ponta com nota fiscal real
+- [ ] Confirmar com a Nexaas o contrato do webhook e ajustar `lib/nexaas.ts`
+      (§3.5)
+- [ ] Preencher `NEXAAS_SKU_PARA_PRODUTO` com os SKUs reais da loja
+- [ ] Configurar `NEXAAS_WEBHOOK_SECRET` no ambiente de produção
+- [ ] Teste de ponta a ponta com um pedido real na loja

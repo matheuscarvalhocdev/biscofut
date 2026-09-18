@@ -27,7 +27,7 @@ export default function Hero() {
           <p className="mt-7 max-w-prose text-lg leading-relaxed text-ink/75">
             São <strong className="font-black text-navy">{quantidade} itens</strong>{" "}
             autografados em jogo. Compre qualquer produto{" "}
-            <FutiWordmark className="mx-0.5 inline-block h-[0.95em] w-auto translate-y-[0.1em] text-navy" />
+            <FutiWordmark className="mx-0.5 inline-block h-[0.95em] w-auto translate-y-[0.13em] align-baseline text-navy" />
             , cadastre a nota fiscal e receba seus números da sorte.
           </p>
 

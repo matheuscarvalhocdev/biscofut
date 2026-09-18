@@ -58,11 +58,7 @@ export default function Regulamento() {
         </p>
         <p>
           Período de divulgação da campanha:{" "}
-          <strong>
-            {formatDate(campaign.divulgacao.inicio)} a{" "}
-            {formatDate(campaign.divulgacao.fim)}
-          </strong>
-          .
+          <strong>mesmo período de participação</strong>.
         </p>
         <p>
           As apurações ocorrerão mensalmente na última quarta-feira de cada
@@ -182,7 +178,7 @@ export default function Regulamento() {
         <p>Serão distribuídos:</p>
         <Bullets
           items={[
-            `${itensAutografados.quantidade} (vinte e quatro) itens autografados – camisetas do Brasil autografadas pelo Neymar Júnior.`,
+            `${itensAutografados.quantidade} (vinte e dois) itens autografados – camisetas do Brasil autografadas pelo Neymar Júnior.`,
           ]}
         />
         <p>Valor unitário estimado: {currency(itensAutografados.valorUnitario)}.</p>
@@ -254,7 +250,8 @@ export default function Regulamento() {
           >
             {SITE}
           </a>{" "}
-          em até 15 dias após a apuração.
+          em até 15 dias após a apuração, permanecendo a divulgação do
+          resultado disponível no site por mais 30 dias.
         </p>
       </Clause>
 

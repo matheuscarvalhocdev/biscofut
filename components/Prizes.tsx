@@ -29,7 +29,7 @@ export default function Prizes() {
               Camiseta do Brasil Oficial Autografada pelo Neymar Jr.
             </h3>
             <p className="mt-4 max-w-prose leading-relaxed text-ink/70">
-              Vinte e quatro unidades, cada uma assinada individualmente. Um
+              Vinte e duas unidades, cada uma assinada individualmente. Um
               item por contemplado.
             </p>
 

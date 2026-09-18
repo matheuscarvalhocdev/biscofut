@@ -44,21 +44,19 @@ export const campaign = {
     pdf: null as string | null,
   },
 
-  /** Vigência da participação. Formato ISO (AAAA-MM-DD) ou null. */
+  /**
+   * Vigência da participação. Formato ISO (AAAA-MM-DD) ou null.
+   * O período de divulgação da campanha é o mesmo período de participação
+   * (assim consta no regulamento) — não é um valor separado.
+   */
   vigencia: {
-    inicio: "2026-11-01" as string | null,
-    fim: "2027-10-26" as string | null,
-  },
-
-  /** Período de divulgação da campanha (mídia), mais amplo que o de participação. */
-  divulgacao: {
     inicio: "2026-10-01" as string | null,
-    fim: "2027-10-26" as string | null,
+    fim: "2027-09-28" as string | null,
   },
 
   /**
    * Apuração mensal, na última quarta-feira de cada mês — exceto dezembro,
-   * antecipada para 23/12. Uma data por sorteio, 12 sorteios ao todo.
+   * antecipada para 23/12. Uma data por sorteio, 11 sorteios ao todo.
    */
   apuracao: {
     datas: [
@@ -73,7 +71,6 @@ export const campaign = {
       "2027-07-28",
       "2027-08-25",
       "2027-09-29",
-      "2027-10-27",
     ] as string[],
     /** Extração da Loteria Federal usada como base do sorteio. */
     baseLoteriaFederal: true,
@@ -84,7 +81,7 @@ export const campaign = {
   premios: {
     /** Prêmio principal, já definido no briefing. */
     itensAutografados: {
-      quantidade: 24,
+      quantidade: 22,
       descricao: "camiseta do Brasil oficial autografada pelo Neymar Jr.",
       /** Valor unitário declarado no protocolo. */
       valorUnitario: 400 as number | null,
@@ -114,6 +111,7 @@ export const campaign = {
     regulamento: "/regulamento",
     privacidade: "/politica-de-privacidade",
     termos: "/termos-de-uso",
+    meusNumeros: "/meus-numeros",
   },
 
   contato: {

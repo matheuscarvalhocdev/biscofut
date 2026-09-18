@@ -8,13 +8,8 @@ import {
   onlyDigits,
   parseChaveAcesso,
 } from "@/lib/notaFiscal";
-import {
-  aplicarTeto,
-  calcularNumeros,
-  formatNumeroDaSorte,
-  produtosElegiveis,
-  type ItemCompra,
-} from "@/lib/numeroDaSorte";
+import { aplicarTeto, calcularNumeros, produtosElegiveis, type ItemCompra } from "@/lib/numeroDaSorte";
+import { acumuladoPorCpf, referenciaJaProcessada, registrarNumeros } from "@/lib/store";
 
 /**
  * Registro de participação — cadastro + validação de nota + emissão dos
@@ -26,13 +21,9 @@ import {
  * autorizada pela SPA, aceitar um cadastro que o regulamento proíbe não é
  * bug de UX — é descumprimento do que foi protocolado.
  *
- * ⚠️  PERSISTÊNCIA É UM STUB. O `store` abaixo é um Map em memória: ele morre
- *     a cada reinício e não é compartilhado entre instâncias. Serve para
- *     demonstrar o fluxo completo e provar que as regras funcionam. O que
- *     precisa entrar no lugar, antes de ir ao ar, está em FLUXO.md §6 —
- *     resumindo: banco com UNIQUE em (chave_acesso), UNIQUE em
- *     (numero_da_sorte) e emissão dos números dentro de uma transação, senão
- *     dois pedidos simultâneos recebem o mesmo número.
+ * A persistência (participante, números emitidos, teto por CPF) mora em
+ * lib/store.ts, compartilhada com o webhook da Nexaas — ver o aviso de stub
+ * lá e o FLUXO.md §6.
  */
 
 type Payload = {
@@ -57,17 +48,6 @@ type Payload = {
 };
 
 type FieldError = { campo: string; mensagem: string };
-
-// --- stub de persistência ---------------------------------------------------
-const store = {
-  /** chave de acesso já usada -> CPF que a cadastrou */
-  notas: new Map<string, string>(),
-  /** CPF -> números já acumulados */
-  acumulado: new Map<string, number>(),
-  /** próximo sequencial da série */
-  proximoSequencial: 1,
-};
-// ---------------------------------------------------------------------------
 
 export async function POST(request: Request) {
   // Primeiro portão, antes de olhar o corpo: sem CA registrado, não existe
@@ -108,17 +88,14 @@ export async function POST(request: Request) {
   const itens = body.nota!.itens!;
 
   // Nota já cadastrada — por este CPF ou por outro.
-  if (campaign.regras.notaFiscalUnica && store.notas.has(chave)) {
-    const mesmoDono = store.notas.get(chave) === cpf;
+  if (campaign.regras.notaFiscalUnica && referenciaJaProcessada("nota-fiscal", chave)) {
     return NextResponse.json(
       {
         ok: false,
         erros: [
           {
             campo: "chaveAcesso",
-            mensagem: mesmoDono
-              ? "Você já cadastrou esta nota fiscal."
-              : "Esta nota fiscal já foi utilizada em outra participação.",
+            mensagem: "Esta nota fiscal já foi utilizada em outra participação.",
           },
         ],
       },
@@ -127,7 +104,7 @@ export async function POST(request: Request) {
   }
 
   const solicitados = calcularNumeros(itens);
-  const jaAcumulados = store.acumulado.get(cpf) ?? 0;
+  const jaAcumulados = acumuladoPorCpf(cpf);
   const { concedidos, excedente, restanteApos } = aplicarTeto(solicitados, jaAcumulados);
 
   if (concedidos === 0) {
@@ -147,16 +124,18 @@ export async function POST(request: Request) {
 
   // Numa implementação real, daqui até o commit é UMA transação. Emitir os
   // números fora de transação é o caminho mais curto para número duplicado.
-  const numeros: string[] = [];
-  for (let i = 0; i < concedidos; i++) {
-    numeros.push(formatNumeroDaSorte(store.proximoSequencial++));
-  }
-  store.notas.set(chave, cpf);
-  store.acumulado.set(cpf, jaAcumulados + concedidos);
+  const emitidos = registrarNumeros({
+    cpf,
+    nome: body.participante!.nome,
+    email: body.participante!.email,
+    origem: "nota-fiscal",
+    referencia: chave,
+    quantidade: concedidos,
+  });
 
   return NextResponse.json({
     ok: true,
-    numeros,
+    numeros: emitidos.map((n) => n.numero),
     acumulado: jaAcumulados + concedidos,
     restante: restanteApos,
     excedente,

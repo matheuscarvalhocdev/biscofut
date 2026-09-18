@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import BrandLockup from "./BrandLockup";
 import FutiWordmark from "./FutiWordmark";
+import { campaign } from "@/lib/campaign";
 import { transactionsAllowed } from "@/lib/promoStatus";
 
 const nav = [
@@ -50,6 +52,12 @@ export default function Header() {
               {item.label}
             </a>
           ))}
+          <Link
+            href={campaign.documentos.meusNumeros}
+            className="text-[13px] font-medium text-ink/70 transition-colors hover:text-navy"
+          >
+            Meus números
+          </Link>
         </nav>
 
         <a
@@ -89,6 +97,13 @@ export default function Header() {
               {item.label}
             </a>
           ))}
+          <Link
+            href={campaign.documentos.meusNumeros}
+            onClick={() => setOpen(false)}
+            className="block py-3 text-sm font-medium text-ink/80"
+          >
+            Meus números
+          </Link>
         </nav>
       )}
     </header>

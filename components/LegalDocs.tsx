@@ -81,7 +81,7 @@ export default function LegalDocs() {
 
           <dl className="mt-8 grid gap-6 border-t border-line pt-7 sm:grid-cols-4">
             <Item term="Período de participação" value={periodo()} />
-            <Item term="Apuração" value="Mensal, 12 sorteios" />
+            <Item term="Apuração" value="Mensal, 11 sorteios" />
             <Item term="Base do sorteio" value="Extração da Loteria Federal" />
             <Item term="Legislação" value={`${campaign.legal.lei} · ${campaign.legal.decreto}`} />
           </dl>

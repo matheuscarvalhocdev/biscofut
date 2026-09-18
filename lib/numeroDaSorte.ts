@@ -34,6 +34,16 @@ export type ProdutoElegivel = {
  */
 export const produtosElegiveis: ProdutoElegivel[] = [
   {
+    sku: "FUTI-CARD",
+    nome: "Futi Card",
+    descricao:
+      "Futi Card com 1 de 23 cards colecionáveis surpresa, acompanhado de biscoitos temáticos.",
+    numerosPorUnidade: 1,
+    imagem: "/images/futi-collection-box.png",
+    imagemLargura: 180,
+    imagemAltura: 293,
+  },
+  {
     sku: "FUTI-COL",
     nome: "Futi Collection",
     descricao:
@@ -52,16 +62,6 @@ export const produtosElegiveis: ProdutoElegivel[] = [
     imagem: "/images/futi-arena-box.png",
     imagemLargura: 300,
     imagemAltura: 295,
-  },
-  {
-    sku: "FUTI-CARD",
-    nome: "Futi Card",
-    descricao:
-      "Futi Card com 1 de 23 cards colecionáveis surpresa, acompanhado de biscoitos temáticos.",
-    numerosPorUnidade: 1,
-    imagem: "/images/futi-collection-box.png",
-    imagemLargura: 180,
-    imagemAltura: 293,
   },
 ];
 
