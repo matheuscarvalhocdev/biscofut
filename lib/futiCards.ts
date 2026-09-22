@@ -1,17 +1,15 @@
 /**
- * As 23 cartas colecionáveis do Futi Card.
+ * As 23 cartas colecionáveis do Futi Card — coleção completa.
  *
- * Nome, raridade e atributos das primeiras 22 vieram direto da arte final
- * enviada pelo time de design. A 23ª ainda está em produção — fica marcada
- * como pendente até chegar.
+ * Nome, raridade e atributos vieram direto da arte final enviada pelo time
+ * de design.
  *
- * As 22 imagens ficam em public/images/cards/carta-01.jpg ... carta-22.jpg.
+ * As imagens ficam em public/images/cards/carta-01.jpg ... carta-23.jpg.
  * São conversões dos PNGs originais (redimensionadas para no máximo 1000px
  * no maior lado, recomprimidas como JPEG qualidade 85) — os PNGs enviados
- * pelo design tinham ~2-3 MB cada (55 MB ao todo), pesados demais pra web;
- * as versões aqui ficam por volta de 150-200 KB sem perda visível, já que a
- * carta nunca é exibida acima de ~320px no leque (ver CardFan.tsx). Quando a
- * 23ª chegar, repetir o mesmo processo antes de salvar.
+ * pelo design tinham ~2-3 MB cada, pesados demais pra web; as versões aqui
+ * ficam por volta de 150-200 KB sem perda visível, já que a carta nunca é
+ * exibida acima de ~320px no leque (ver CardFan.tsx).
  */
 
 export type RaridadeCarta = "normal" | "premium" | "golden";
@@ -27,9 +25,9 @@ export type Carta = {
   numero: number;
   nome: string;
   raridade: RaridadeCarta;
-  /** `null` só na 23ª carta, ainda em produção. */
-  atributos: Atributos | null;
+  atributos: Atributos;
   imagem: string;
+  /** Marca uma carta cuja arte ainda não chegou — hoje nenhuma. */
   pendente?: boolean;
 };
 
@@ -66,7 +64,7 @@ const PREMIUM: [string, Atributos][] = [
   ["Caneta Aura", { velocidade: 92, chute: 91, habilidade: 98, energia: 86 }],
 ];
 
-/** As 6 cartas Normal — sem efeito especial, a base do time. */
+/** As 7 cartas Normal — sem efeito especial, a base do time. */
 const NORMAL: [string, Atributos][] = [
   ["Driblador", { velocidade: 93, chute: 92, habilidade: 97, energia: 88 }],
   ["Drible Raiz", { velocidade: 94, chute: 82, habilidade: 96, energia: 90 }],
@@ -74,6 +72,7 @@ const NORMAL: [string, Atributos][] = [
   ["Ousadia em Campo", { velocidade: 89, chute: 92, habilidade: 96, energia: 91 }],
   ["Craque Campeão", { velocidade: 90, chute: 95, habilidade: 97, energia: 90 }],
   ["Velocidade e Habilidade", { velocidade: 96, chute: 85, habilidade: 94, energia: 92 }],
+  ["Playmaker", { velocidade: 82, chute: 90, habilidade: 96, energia: 85 }],
 ];
 
 const RECEBIDAS: (readonly [string, RaridadeCarta, Atributos])[] = [
@@ -82,20 +81,10 @@ const RECEBIDAS: (readonly [string, RaridadeCarta, Atributos])[] = [
   ...NORMAL.map(([nome, atributos]) => [nome, "normal", atributos] as const),
 ];
 
-export const cartas: Carta[] = [
-  ...RECEBIDAS.map(([nome, raridade, atributos], i) => ({
-    numero: i + 1,
-    nome,
-    raridade,
-    atributos,
-    imagem: imagemCarta(i + 1),
-  })),
-  {
-    numero: 23,
-    nome: "Carta 23",
-    raridade: "golden",
-    atributos: null,
-    imagem: imagemCarta(23),
-    pendente: true,
-  },
-];
+export const cartas: Carta[] = RECEBIDAS.map(([nome, raridade, atributos], i) => ({
+  numero: i + 1,
+  nome,
+  raridade,
+  atributos,
+  imagem: imagemCarta(i + 1),
+}));

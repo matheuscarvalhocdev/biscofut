@@ -19,10 +19,10 @@ import type { Carta, RaridadeCarta } from "@/lib/futiCards";
  * Os dois modos compartilham o mesmo estado (`indice`) e os mesmos botões de
  * navegação/contador/atributos abaixo.
  *
- * Enquanto a arte de uma carta não chega (ver lib/futiCards.ts — hoje só a
- * 23ª está pendente), a imagem que falhar ao carregar, ou que estiver
- * marcada `pendente`, cai automaticamente num placeholder com nome e
- * raridade da carta — a página não fica com ícone de imagem quebrada.
+ * Se a arte de alguma carta futura ainda não tiver chegado (ver
+ * `pendente` em lib/futiCards.ts), ou se a imagem falhar ao carregar, cai
+ * automaticamente num placeholder com nome e raridade da carta — a página
+ * não fica com ícone de imagem quebrada.
  */
 
 const RARIDADE_LABEL: Record<RaridadeCarta, string> = {
