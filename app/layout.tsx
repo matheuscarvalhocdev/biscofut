@@ -20,6 +20,11 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
+  // Ícone servido estático de public/, sem passar pelo otimizador de imagem
+  // do Next — a convenção app/icon.png tentou reprocessar o PNG e travou.
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

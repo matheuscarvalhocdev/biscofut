@@ -19,6 +19,8 @@ import { campaign } from "./campaign";
 
 export type ProdutoElegivel = {
   sku: string;
+  /** Identificador de URL — /produtos/[slug]. */
+  slug: string;
   nome: string;
   descricao: string;
   /** Números da sorte concedidos por unidade comprada. */
@@ -35,6 +37,7 @@ export type ProdutoElegivel = {
 export const produtosElegiveis: ProdutoElegivel[] = [
   {
     sku: "FUTI-CARD",
+    slug: "futi-card",
     nome: "Futi Card",
     descricao:
       "Futi Card com 1 de 23 cards colecionáveis surpresa, acompanhado de biscoitos temáticos.",
@@ -45,6 +48,7 @@ export const produtosElegiveis: ProdutoElegivel[] = [
   },
   {
     sku: "FUTI-COL",
+    slug: "futi-collection",
     nome: "Futi Collection",
     descricao:
       "Blind box com 1 de 6 bonequinhos colecionáveis surpresa, acompanhada de biscoitos temáticos e bolinha.",
@@ -55,6 +59,7 @@ export const produtosElegiveis: ProdutoElegivel[] = [
   },
   {
     sku: "FUTI-ARE",
+    slug: "futi-arena",
     nome: "Futi Arena",
     descricao:
       "O set completo: 2 bonequinhos, 2 bolinhas, mini campo e kit de acessórios.",

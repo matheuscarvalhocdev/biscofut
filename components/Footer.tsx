@@ -8,8 +8,8 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20">
         <div className="flex flex-col gap-10 border-b border-white/10 pb-12 md:flex-row md:items-start md:justify-between">
           <div>
-            <FutiWordmark className="h-9 w-auto text-white" />
-            <BrandLockup tone="light" className="mt-6 text-sm" />
+            <BrandLockup tone="light" className="text-base" />
+            <FutiWordmark tone="light" className="mt-6 h-7 w-auto" />
           </div>
 
           <nav className="grid gap-x-14 gap-y-8 sm:grid-cols-2" aria-label="Rodapé">

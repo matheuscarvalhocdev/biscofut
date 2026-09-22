@@ -49,10 +49,12 @@ export default function Hero() {
         <figure className="relative mx-auto w-full max-w-sm">
           <div className="overflow-hidden rounded-2xl bg-ink">
             <Image
-              src="/images/neymar-hero.png"
-              alt="Neymar Jr. em campo com o uniforme da seleção brasileira"
-              width={243}
-              height={300}
+              src="/images/neymar-hero.jpg"
+              alt="Neymar Jr. em campo, conduzindo a bola"
+              width={486}
+              height={600}
+              sizes="(max-width: 384px) 100vw, 384px"
+              quality={90}
               className="h-full w-full object-cover"
               priority
             />

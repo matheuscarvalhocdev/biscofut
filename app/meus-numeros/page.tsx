@@ -40,9 +40,9 @@ export default function MeusNumeros() {
       <header className="border-b border-line bg-paper">
         <div className="mx-auto flex max-w-3xl items-center gap-4 px-6 py-5">
           <Link href="/" className="flex items-center gap-3" aria-label="Voltar para a promoção">
-            <FutiWordmark className="h-6 w-auto text-navy" />
+            <BrandLockup className="text-sm" />
             <span className="hidden h-7 w-px bg-navy/20 sm:block" aria-hidden="true" />
-            <BrandLockup className="hidden text-xs sm:flex" />
+            <FutiWordmark className="hidden h-5 w-auto text-navy sm:block" />
           </Link>
           <Link
             href="/"

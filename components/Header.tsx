@@ -37,9 +37,9 @@ export default function Header() {
     >
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-4 sm:gap-6 sm:px-6 md:px-10">
         <a href="#conteudo" className="flex items-center gap-3" aria-label="Promoção Futi — início">
-          <FutiWordmark className="h-7 w-auto text-navy" />
+          <BrandLockup className="text-[15px]" />
           <span className="hidden h-8 w-px bg-navy/20 sm:block" aria-hidden="true" />
-          <BrandLockup className="hidden text-[13px] sm:flex" />
+          <FutiWordmark className="hidden h-6 w-auto text-navy sm:block" />
         </a>
 
         <nav className="ml-auto hidden items-center gap-7 lg:flex" aria-label="Seções da página">

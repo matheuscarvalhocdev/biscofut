@@ -317,9 +317,16 @@ aceito**: é o que prova, meses depois, o que a pessoa aceitou.
 - [ ] Substituir as minutas legais pelo texto final do jurídico
   (`app/regulamento`, `app/politica-de-privacidade`, `app/termos-de-uso`) e
   remover o aviso de minuta (`draft={false}` em `LegalPage`)
-- [ ] Trocar o logotipo `futï` pelo SVG oficial (`components/FutiWordmark.tsx`)
+- [x] Trocar o logotipo `futï` pelo PNG oficial (`components/FutiWordmark.tsx`)
 - [ ] Trocar as assinaturas Biscoitê e Neymar Jr. pelos SVGs oficiais
-  (`components/BrandLockup.tsx`)
+  (`components/BrandLockup.tsx`) — a "Biscoitê" já está com o PNG oficial;
+  falta o "NEYMAR JR." com o monograma NJ
+- [x] Variante clara (branca) dos logos futi e Biscoitê para o Footer
+  (`bg-ink`) — falta ainda uma versão clara do "NEYMAR JR." (item acima)
+- [ ] Favicon (`public/favicon.png`) está com o "B" da Biscoitê, mas em PNG
+  retangular (714×1110) — gerar um `.ico`/PNG quadrado de verdade quando
+  possível, e reconsiderar usar a convenção `app/icon.png` do Next (tentei
+  e travou neste ambiente, provavelmente por faltar o pacote `sharp`)
 - [ ] Instalar a Noka licenciada e descomentar o `@font-face`
   (`app/globals.css`)
 - [ ] Conferir que os pesos de números por produto batem com o regulamento

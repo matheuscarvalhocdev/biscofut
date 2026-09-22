@@ -1,15 +1,20 @@
 /**
  * Lockup de co-branding: Biscoitê | NEYMAR JR.
  *
- * O board fecha com as duas marcas lado a lado, separadas por um filete
- * vertical, em peso visual equivalente. Isso é contrato entre as partes, não
- * decisão de layout — por isso vive num componente só, e não solto em cada
- * seção. Não redimensionar uma marca sem a outra.
+ * Biscoitê é a promotora e a marca principal — por decisão de negócio, o
+ * logotipo dela vem primeiro e maior que os demais (futi, Neymar Jr.) em
+ * todo lugar onde aparecem juntos. Isso substitui a decisão anterior de
+ * peso visual equivalente entre Biscoitê e Neymar Jr.
  *
- * ⚠️  As duas assinaturas abaixo são aproximações tipográficas. Substituir
- *     pelos SVGs oficiais (a "Biscoitê" é uma caligrafia com script e cedilha;
- *     o "NEYMAR JR." tem o monograma NJ à esquerda).
+ * A "Biscoitê" já usa o PNG oficial, com variantes azul (fundo claro) e
+ * branca (fundo escuro, via `tone="light"`). O "NEYMAR JR." continua
+ * aproximação tipográfica — substituir por SVG oficial quando existir.
  */
+
+const BISCOITE_SRC = {
+  navy: "/images/biscoite-azul.png",
+  light: "/images/biscoite-branco.png",
+} as const;
 
 export default function BrandLockup({
   className = "",
@@ -24,11 +29,10 @@ export default function BrandLockup({
 
   return (
     <div className={`flex items-center gap-4 ${color} ${className}`}>
-      <span className="font-black italic tracking-tight text-[1.15em] leading-none">
-        Biscoitê
-      </span>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={BISCOITE_SRC[tone]} alt="Biscoitê" className="h-[1.65em] w-auto" />
 
-      <span className={`h-[1.4em] w-px shrink-0 ${rule}`} aria-hidden="true" />
+      <span className={`h-[1.75em] w-px shrink-0 ${rule}`} aria-hidden="true" />
 
       <span className="flex items-center gap-2 leading-none">
         <NjMonogram className="h-[1.3em] w-auto" />

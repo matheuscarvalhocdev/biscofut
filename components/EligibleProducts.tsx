@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import Headline from "./Headline";
 import { produtosElegiveis } from "@/lib/numeroDaSorte";
 
@@ -15,9 +16,10 @@ export default function EligibleProducts() {
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {produtosElegiveis.map((produto) => (
-            <article
+            <Link
               key={produto.sku}
-              className="card flex flex-col items-start gap-5 p-6 sm:flex-row sm:items-center sm:gap-7 sm:p-8"
+              href={`/produtos/${produto.slug}`}
+              className="card group flex flex-col items-start gap-5 p-6 transition-colors hover:bg-sky/15 sm:flex-row sm:items-center sm:gap-7 sm:p-8"
             >
               <Image
                 src={produto.imagem}
@@ -27,8 +29,14 @@ export default function EligibleProducts() {
                 className="h-24 w-auto shrink-0 sm:h-28"
               />
               <div>
-                <h3 className="text-lg font-black uppercase tracking-headline">
+                <h3 className="flex items-center gap-2 text-lg font-black uppercase tracking-headline">
                   {produto.nome}
+                  <span
+                    aria-hidden="true"
+                    className="text-steel transition-transform group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink/70">
                   {produto.descricao}
@@ -42,7 +50,7 @@ export default function EligibleProducts() {
                   </span>
                 </p>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
 
