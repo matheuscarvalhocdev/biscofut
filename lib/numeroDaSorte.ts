@@ -42,9 +42,9 @@ export const produtosElegiveis: ProdutoElegivel[] = [
     descricao:
       "Futi Card com 1 de 23 cards colecionáveis surpresa, acompanhado de biscoitos temáticos.",
     numerosPorUnidade: 1,
-    imagem: "/images/futi-collection-box.png",
-    imagemLargura: 180,
-    imagemAltura: 293,
+    imagem: "/images/futi-card-box.png",
+    imagemLargura: 447,
+    imagemAltura: 558,
   },
   {
     sku: "FUTI-COL",
